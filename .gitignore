@@ -23,6 +23,7 @@ yarn-error.log*
 *.sw?
 
 go.sum
+/server/config.yaml
 /server/log/
 /server/gva
 /server/latest_log
