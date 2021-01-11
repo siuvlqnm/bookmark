@@ -1,10 +1,10 @@
 package v1
 
 import (
-	"gin-vue-admin/global"
-	"gin-vue-admin/model/response"
 	"github.com/gin-gonic/gin"
 	"github.com/mojocn/base64Captcha"
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/model/response"
 	"go.uber.org/zap"
 )
 

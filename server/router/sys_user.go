@@ -1,8 +1,8 @@
 package router
 
 import (
-	"gin-vue-admin/api/v1"
-	"gin-vue-admin/middleware"
+	"github.com/siuvlqnm/bookmark/api/v1"
+	"github.com/siuvlqnm/bookmark/middleware"
 	"github.com/gin-gonic/gin"
 )
 

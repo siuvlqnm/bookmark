@@ -2,8 +2,9 @@ package service
 
 import (
 	"errors"
-	"gin-vue-admin/global"
-	"gin-vue-admin/model"
+
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/model"
 	"gorm.io/gorm"
 )
 

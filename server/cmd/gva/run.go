@@ -16,9 +16,10 @@ limitations under the License.
 package gva
 
 import (
-	"gin-vue-admin/utils"
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/siuvlqnm/bookmark/utils"
+	"github.com/spf13/cobra"
 )
 
 // runCmd represents the run command

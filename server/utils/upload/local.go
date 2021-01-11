@@ -1,15 +1,17 @@
 package upload
+
 import (
 	"errors"
-	"gin-vue-admin/global"
-	"gin-vue-admin/utils"
-	"go.uber.org/zap"
 	"io"
 	"mime/multipart"
 	"os"
 	"path"
 	"strings"
 	"time"
+
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/utils"
+	"go.uber.org/zap"
 )
 
 type Local struct{}

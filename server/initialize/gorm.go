@@ -1,14 +1,15 @@
 package initialize
 
 import (
-	"gin-vue-admin/global"
-	"gin-vue-admin/initialize/internal"
-	"gin-vue-admin/model"
+	"os"
+
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/initialize/internal"
+	"github.com/siuvlqnm/bookmark/model"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"os"
 )
 
 //@author: SliverHorn

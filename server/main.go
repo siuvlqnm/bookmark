@@ -1,9 +1,9 @@
 package main
 
 import (
-	"gin-vue-admin/core"
-	"gin-vue-admin/global"
-	"gin-vue-admin/initialize"
+	"github.com/siuvlqnm/bookmark/core"
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/initialize"
 )
 
 // @title Swagger Example API

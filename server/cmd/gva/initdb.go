@@ -16,14 +16,14 @@ limitations under the License.
 package gva
 
 import (
-	"gin-vue-admin/cmd/datas"
-	"gin-vue-admin/core"
-	"gin-vue-admin/initialize"
+	"github.com/siuvlqnm/bookmark/cmd/datas"
+	"github.com/siuvlqnm/bookmark/core"
+	"github.com/siuvlqnm/bookmark/initialize"
 
 	"github.com/gookit/color"
 
-	_ "gin-vue-admin/core"
-	"gin-vue-admin/global"
+	_ "github.com/siuvlqnm/bookmark/core"
+	"github.com/siuvlqnm/bookmark/global"
 
 	"github.com/spf13/cobra"
 )
@@ -40,7 +40,7 @@ var initdbCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		path, _ := cmd.Flags().GetString("path")
 		global.GVA_VP = core.Viper(path)
-		global.GVA_LOG = core.Zap()           // 初始化zap日志库
+		global.GVA_LOG = core.Zap() // 初始化zap日志库
 		db := initialize.GormMysql()
 		switch global.GVA_CONFIG.System.DbType {
 		case "mysql":

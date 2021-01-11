@@ -2,10 +2,11 @@ package core
 
 import (
 	"fmt"
-	"gin-vue-admin/global"
-	"gin-vue-admin/initialize"
-	"go.uber.org/zap"
 	"time"
+
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/initialize"
+	"go.uber.org/zap"
 )
 
 type server interface {

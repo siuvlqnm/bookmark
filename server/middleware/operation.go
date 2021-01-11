@@ -2,16 +2,17 @@ package middleware
 
 import (
 	"bytes"
-	"gin-vue-admin/global"
-	"gin-vue-admin/model"
-	"gin-vue-admin/model/request"
-	"gin-vue-admin/service"
-	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/model"
+	"github.com/siuvlqnm/bookmark/model/request"
+	"github.com/siuvlqnm/bookmark/service"
+	"go.uber.org/zap"
 )
 
 func OperationRecord() gin.HandlerFunc {

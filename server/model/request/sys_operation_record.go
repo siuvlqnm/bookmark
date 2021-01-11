@@ -1,6 +1,6 @@
 package request
 
-import "gin-vue-admin/model"
+import "github.com/siuvlqnm/bookmark/model"
 
 type SysOperationRecordSearch struct {
 	model.SysOperationRecord

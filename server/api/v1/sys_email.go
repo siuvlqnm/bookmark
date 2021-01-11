@@ -1,10 +1,10 @@
 package v1
 
 import (
-	"gin-vue-admin/global"
-	"gin-vue-admin/model/response"
-	"gin-vue-admin/service"
 	"github.com/gin-gonic/gin"
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/model/response"
+	"github.com/siuvlqnm/bookmark/service"
 	"go.uber.org/zap"
 )
 

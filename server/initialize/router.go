@@ -1,14 +1,15 @@
 package initialize
 
 import (
-	_ "gin-vue-admin/docs"
-	"gin-vue-admin/global"
-	"gin-vue-admin/middleware"
-	"gin-vue-admin/router"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
+	_ "github.com/siuvlqnm/bookmark/docs"
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/middleware"
+	"github.com/siuvlqnm/bookmark/router"
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
-	"net/http"
 )
 
 // 初始化总路由

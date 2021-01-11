@@ -3,13 +3,14 @@ package service
 import (
 	"errors"
 	"fmt"
-	"gin-vue-admin/constant"
-	"gin-vue-admin/global"
-	"gin-vue-admin/model"
-	"gin-vue-admin/model/request"
+	"strconv"
+
+	"github.com/siuvlqnm/bookmark/constant"
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/model"
+	"github.com/siuvlqnm/bookmark/model/request"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
-	"strconv"
 )
 
 func getTable(businessType string) interface{} {

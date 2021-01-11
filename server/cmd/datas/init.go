@@ -1,11 +1,12 @@
 package datas
 
 import (
-	"gin-vue-admin/model"
+	"os"
+
 	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/gookit/color"
+	"github.com/siuvlqnm/bookmark/model"
 	"gorm.io/gorm"
-	"os"
 )
 
 func InitMysqlData(db *gorm.DB) {

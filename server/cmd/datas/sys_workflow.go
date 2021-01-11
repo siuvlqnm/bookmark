@@ -1,12 +1,13 @@
 package datas
 
 import (
-	"gin-vue-admin/global"
-	"gin-vue-admin/model"
-	"github.com/gookit/color"
-	"gorm.io/gorm"
 	"os"
 	"time"
+
+	"github.com/gookit/color"
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/model"
+	"gorm.io/gorm"
 )
 
 var WorkflowProcess = []model.WorkflowProcess{

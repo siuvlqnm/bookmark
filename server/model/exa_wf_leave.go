@@ -2,8 +2,9 @@
 package model
 
 import (
-	"gin-vue-admin/global"
 	"time"
+
+	"github.com/siuvlqnm/bookmark/global"
 )
 
 // 如果含有time.Time 请自行import time包

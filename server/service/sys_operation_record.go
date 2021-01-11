@@ -1,9 +1,9 @@
 package service
 
 import (
-	"gin-vue-admin/global"
-	"gin-vue-admin/model"
-	"gin-vue-admin/model/request"
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/model"
+	"github.com/siuvlqnm/bookmark/model/request"
 )
 
 //@author: [granty1](https://github.com/granty1)

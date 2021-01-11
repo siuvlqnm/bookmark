@@ -3,16 +3,17 @@ package service
 import (
 	"errors"
 	"fmt"
-	"gin-vue-admin/global"
-	"gin-vue-admin/model"
-	"gin-vue-admin/model/request"
-	"gin-vue-admin/utils"
-	"gorm.io/gorm"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/siuvlqnm/bookmark/global"
+	"github.com/siuvlqnm/bookmark/model"
+	"github.com/siuvlqnm/bookmark/model/request"
+	"github.com/siuvlqnm/bookmark/utils"
+	"gorm.io/gorm"
 )
 
 type tplData struct {
