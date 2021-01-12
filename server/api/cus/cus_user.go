@@ -1,4 +1,4 @@
-package cli
+package cus
 
 import (
 	"time"
@@ -19,36 +19,35 @@ import (
 // @Tags Base
 // @Summary 用户登录
 // @Produce  application/json
-// @Param data body request.Login true "用户名, 密码, 验证码"
+// @Param data body request.Login true "用户名, 密码"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"登陆成功"}"
 // @Router /base/login [post]
 func Login(c *gin.Context) {
-	var L request.Login
+	var L request.CLogin
 	_ = c.ShouldBindJSON(&L)
-	if err := utils.Verify(L, utils.LoginVerify); err != nil {
+	if err := utils.Verify(L, utils.CLoginVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 
-	U := &model.SysUser{Username: L.Username, Password: L.Password}
-	if err, user := service.Login(U); err != nil {
-		global.GVA_LOG.Error("登陆失败! 用户名不存在或者密码错误", zap.Any("err", err))
-		response.FailWithMessage("用户名不存在或者密码错误", c)
+	U := &model.CusUser{Username: L.Username, Password: L.Password}
+	if err, user := service.CLogin(U); err != nil {
+		global.GVA_LOG.Error("登录失败！用户名不存在或密码错误", zap.Any("err", err))
+		response.FailWithMessage("用户名不存在或密码错误", c)
 	} else {
 		tokenNext(c, *user)
 	}
 }
 
 // 登录以后签发jwt
-func tokenNext(c *gin.Context, user model.SysUser) {
+func tokenNext(c *gin.Context, user model.CusUser) {
 	j := &middleware.JWT{SigningKey: []byte(global.GVA_CONFIG.JWT.SigningKey)} // 唯一签名
 	claims := request.CustomClaims{
-		UUID:        user.UUID,
-		ID:          user.ID,
-		NickName:    user.NickName,
-		Username:    user.Username,
-		AuthorityId: user.AuthorityId,
-		BufferTime:  global.GVA_CONFIG.JWT.BufferTime, // 缓冲时间1天 缓冲时间内会获得新的token刷新令牌 此时一个用户会存在两个有效令牌 但是前端只留一个 另一个会丢失
+		UUID:       user.UUID,
+		ID:         user.ID,
+		NickName:   user.NickName,
+		Username:   user.Username,
+		BufferTime: global.GVA_CONFIG.JWT.BufferTime, // 缓冲时间1天 缓冲时间内会获得新的token刷新令牌 此时一个用户会存在两个有效令牌 但是前端只留一个 另一个会丢失
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix() - 1000,                              // 签名生效时间
 			ExpiresAt: time.Now().Unix() + global.GVA_CONFIG.JWT.ExpiresTime, // 过期时间 7天  配置文件
@@ -62,7 +61,7 @@ func tokenNext(c *gin.Context, user model.SysUser) {
 		return
 	}
 	if !global.GVA_CONFIG.System.UseMultipoint {
-		response.OkWithDetailed(response.LoginResponse{
+		response.OkWithDetailed(response.CusLoginResponse{
 			User:      user,
 			Token:     token,
 			ExpiresAt: claims.StandardClaims.ExpiresAt * 1000,
@@ -75,7 +74,7 @@ func tokenNext(c *gin.Context, user model.SysUser) {
 			response.FailWithMessage("设置登录状态失败", c)
 			return
 		}
-		response.OkWithDetailed(response.LoginResponse{
+		response.OkWithDetailed(response.CusLoginResponse{
 			User:      user,
 			Token:     token,
 			ExpiresAt: claims.StandardClaims.ExpiresAt * 1000,
@@ -94,7 +93,7 @@ func tokenNext(c *gin.Context, user model.SysUser) {
 			response.FailWithMessage("设置登录状态失败", c)
 			return
 		}
-		response.OkWithDetailed(response.LoginResponse{
+		response.OkWithDetailed(response.CusLoginResponse{
 			User:      user,
 			Token:     token,
 			ExpiresAt: claims.StandardClaims.ExpiresAt * 1000,
@@ -115,13 +114,13 @@ func Register(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	user := &model.CliUser{Username: R.Username, NickName: R.NickName, Password: R.Password}
+	user := &model.CusUser{Username: R.Username, NickName: R.NickName, Password: R.Password}
 	err, userReturn := service.CRegister(*user)
 	if err != nil {
 		global.GVA_LOG.Error("注册失败", zap.Any("err", err))
-		response.FailWithDetailed(response.CliLoginResponse{User: userReturn}, "注册失败", c)
+		response.FailWithDetailed(response.CusLoginResponse{User: userReturn}, "注册失败", c)
 	} else {
-		response.OkWithDetailed(response.CliUserResponse{User: userReturn}, "注册成功", c)
+		response.OkWithDetailed(response.CusUserResponse{User: userReturn}, "注册成功", c)
 	}
 }
 
@@ -133,14 +132,14 @@ func Register(c *gin.Context) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
 // @Router /user/changePassword [put]
 func ChangePassword(c *gin.Context) {
-	var user request.ChangePasswordStruct
+	var user request.CChangePasswordStruct
 	_ = c.ShouldBindJSON(&user)
 	if err := utils.Verify(user, utils.ChangePasswordVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	U := &model.SysUser{Username: user.Username, Password: user.Password}
-	if err, _ := service.ChangePassword(U, user.NewPassword); err != nil {
+	U := &model.CusUser{Username: user.Username, Password: user.Password}
+	if err, _ := service.CChangePassword(U, user.NewPassword); err != nil {
 		global.GVA_LOG.Error("修改失败", zap.Any("err", err))
 		response.FailWithMessage("修改失败，原密码与当前账户不符", c)
 	} else {

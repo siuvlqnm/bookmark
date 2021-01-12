@@ -11,10 +11,8 @@ type CRegister struct {
 
 // User login structure
 type CLogin struct {
-	Username  string `json:"username"`
-	Password  string `json:"password"`
-	Captcha   string `json:"captcha"`
-	CaptchaId string `json:"captchaId"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 // Modify password structure

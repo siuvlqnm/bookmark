@@ -5,7 +5,7 @@ import (
 	"github.com/siuvlqnm/bookmark/global"
 )
 
-type CliUser struct {
+type CusUser struct {
 	global.GVA_MODEL
 	UUID     uuid.UUID `json:"uuid"`
 	Username string    `json:"userName"`

@@ -16,4 +16,5 @@ var (
 	ChangePasswordVerify   = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty()}, "NewPassword": {NotEmpty()}}
 	SetUserAuthorityVerify = Rules{"UUID": {NotEmpty()}, "AuthorityId": {NotEmpty()}}
 	CRegisterVerify        = Rules{"Username": {NotEmpty()}, "NickName": {NotEmpty()}, "Password": {NotEmpty()}}
+	CLoginVerify           = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty()}}
 )

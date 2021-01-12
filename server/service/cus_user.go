@@ -14,11 +14,11 @@ import (
 //@author: [piexlmax](https://github.com/piexlmax)
 //@function: Register
 //@description: 用户注册
-//@param: u model.SysUser
-//@return: err error, userInter model.SysUser
+//@param: u model.CusUser
+//@return: err error, userInter model.CusUser
 
-func CRegister(u model.CliUser) (err error, userInter model.CliUser) {
-	var user model.CliUser
+func CRegister(u model.CusUser) (err error, userInter model.CusUser) {
+	var user model.CusUser
 	if !errors.Is(global.GVA_DB.Where("username = ?", u.Username).First(&user).Error, gorm.ErrRecordNotFound) {
 		return errors.New("用户名已注册"), userInter
 	}
@@ -31,13 +31,12 @@ func CRegister(u model.CliUser) (err error, userInter model.CliUser) {
 //@author: [piexlmax](https://github.com/piexlmax)
 //@function: Login
 //@description: 用户登录
-//@param: u *model.SysUser
-//@return: err error, userInter *model.SysUser
-
-func cLogin(u *model.SysUser) (err error, userInter *model.SysUser) {
-	var user model.SysUser
+//@param: u *model.CusUser
+//@return: err error, userInter *model.CusUser
+func CLogin(u *model.CusUser) (err error, userInter *model.CusUser) {
+	var user model.CusUser
 	u.Password = utils.MD5V([]byte(u.Password))
-	err = global.GVA_DB.Where("username = ? AND password = ?", u.Username, u.Password).Preload("Authority").First(&user).Error
+	err = global.GVA_DB.Where("username = ? AND password = ?", u.Username, u.Password).First(&user).Error
 	return err, &user
 }
 
@@ -46,9 +45,8 @@ func cLogin(u *model.SysUser) (err error, userInter *model.SysUser) {
 //@description: 修改用户密码
 //@param: u *model.SysUser, newPassword string
 //@return: err error, userInter *model.SysUser
-
-func cChangePassword(u *model.SysUser, newPassword string) (err error, userInter *model.SysUser) {
-	var user model.SysUser
+func CChangePassword(u *model.CusUser, newPassword string) (err error, userInter *model.CusUser) {
+	var user model.CusUser
 	u.Password = utils.MD5V([]byte(u.Password))
 	err = global.GVA_DB.Where("username = ? AND password = ?", u.Username, u.Password).First(&user).Update("password", utils.MD5V([]byte(newPassword))).Error
 	return err, u

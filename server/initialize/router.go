@@ -51,9 +51,9 @@ func Routers() *gin.Engine {
 	}
 
 	CliPrivateGroup := Router.Group("")
-	CliPrivateGroup.Use()
+	CliPrivateGroup.Use(middleware.JWTAuth())
 	{
-		router.InitCliUserRouter(CliPrivateGroup) // 用户录用
+		router.InitCusUserRouter(CliPrivateGroup) // 用户录用
 	}
 	global.GVA_LOG.Info("router register success")
 	return Router

@@ -2,13 +2,14 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/siuvlqnm/bookmark/api/cli"
+	"github.com/siuvlqnm/bookmark/api/cus"
+	"github.com/siuvlqnm/bookmark/middleware"
 )
 
-func InitCliUserRouter(Router *gin.RouterGroup) {
-	UserRouter := Router.Group("c").Use()
+func InitCusUserRouter(Router *gin.RouterGroup) {
+	UserRouter := Router.Group("c").Use(middleware.OperationRecord())
 	{
-		UserRouter.POST("changePassword", cli.ChangePassword)
+		UserRouter.POST("changePassword", cus.ChangePassword)
 	}
 }
 
