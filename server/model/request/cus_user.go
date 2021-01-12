@@ -17,7 +17,6 @@ type CLogin struct {
 
 // Modify password structure
 type CChangePasswordStruct struct {
-	Username    string `json:"username"`
 	Password    string `json:"password"`
 	NewPassword string `json:"newPassword"`
 }

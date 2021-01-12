@@ -47,6 +47,7 @@ func tokenNext(c *gin.Context, user model.CusUser) {
 		ID:         user.ID,
 		NickName:   user.NickName,
 		Username:   user.Username,
+		IsCus:      true,
 		BufferTime: global.GVA_CONFIG.JWT.BufferTime, // 缓冲时间1天 缓冲时间内会获得新的token刷新令牌 此时一个用户会存在两个有效令牌 但是前端只留一个 另一个会丢失
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix() - 1000,                              // 签名生效时间
@@ -138,8 +139,9 @@ func ChangePassword(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	U := &model.CusUser{Username: user.Username, Password: user.Password}
-	if err, _ := service.CChangePassword(U, user.NewPassword); err != nil {
+	jwtId := getUserID(c)
+	U := &model.CusUser{Password: user.Password}
+	if err, _ := service.CChangePassword(U, jwtId, user.NewPassword); err != nil {
 		global.GVA_LOG.Error("修改失败", zap.Any("err", err))
 		response.FailWithMessage("修改失败，原密码与当前账户不符", c)
 	} else {

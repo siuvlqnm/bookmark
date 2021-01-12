@@ -45,10 +45,10 @@ func CLogin(u *model.CusUser) (err error, userInter *model.CusUser) {
 //@description: 修改用户密码
 //@param: u *model.SysUser, newPassword string
 //@return: err error, userInter *model.SysUser
-func CChangePassword(u *model.CusUser, newPassword string) (err error, userInter *model.CusUser) {
+func CChangePassword(u *model.CusUser, id uint, newPassword string) (err error, userInter *model.CusUser) {
 	var user model.CusUser
 	u.Password = utils.MD5V([]byte(u.Password))
-	err = global.GVA_DB.Where("username = ? AND password = ?", u.Username, u.Password).First(&user).Update("password", utils.MD5V([]byte(newPassword))).Error
+	err = global.GVA_DB.Where("id = ? AND password = ?", id, u.Password).First(&user).Update("password", utils.MD5V([]byte(newPassword))).Error
 	return err, u
 }
 
@@ -118,11 +118,10 @@ func cFindUserById(id int) (err error, user *model.SysUser) {
 //@function: FindUserByUuid
 //@description: 通过uuid获取用户信息
 //@param: uuid string
-//@return: err error, user *model.SysUser
-
-func cFindUserByUuid(uuid string) (err error, user *model.SysUser) {
-	var u model.SysUser
-	if err = global.GVA_DB.Where("`uuid` = ?", uuid).First(&u).Error; err != nil {
+//@return: err error, user *model.CusUser
+func CFindUserByUuid(uuid string) (err error, user *model.CusUser) {
+	var u model.CusUser
+	if err = global.GVA_DB.Where("uuid = ?", uuid).First(&u).Error; err != nil {
 		return errors.New("用户不存在"), &u
 	}
 	return nil, &u
