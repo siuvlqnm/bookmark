@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/siuvlqnm/bookmark/api/cus"
 	v1 "github.com/siuvlqnm/bookmark/api/v1"
+	"github.com/siuvlqnm/bookmark/api/v1/cus"
 )
 
 func InitBaseRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
