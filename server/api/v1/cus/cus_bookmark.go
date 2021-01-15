@@ -24,12 +24,16 @@ func CreateBookmark(c *gin.Context) {
 		return
 	}
 	website := &model.CusWebsite{Protocol: P.Protocol, Domain: P.Domain, Port: int(P.Port)}
-	service.CreateWebSite(website)
-	bookmark := &model.CusBookmark{CusUserId: getUserID(c), Path: P.Path, Query: P.Query}
-	if err, _ := service.CreateBookmark(*bookmark); err != nil {
+	if err, w := service.CreateWebSite(website); err != nil {
 		global.GVA_LOG.Error("添加失败", zap.Any("err", err))
 		response.FailWithMessage("添加失败", c)
 	} else {
-		response.OkWithMessage("添加成功", c)
+		bookmark := &model.CusBookmark{CusWebId: w.ID, CusUserId: getUserID(c), Path: P.Path, Query: P.Query}
+		if err, _ := service.CreateBookmark(*bookmark); err != nil {
+			global.GVA_LOG.Error("添加失败", zap.Any("err", err))
+			response.FailWithMessage("添加失败", c)
+		} else {
+			response.OkWithMessage("添加成功", c)
+		}
 	}
 }
