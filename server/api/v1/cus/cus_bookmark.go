@@ -37,3 +37,25 @@ func CreateBookmark(c *gin.Context) {
 		}
 	}
 }
+
+func GetBookmarkList(c *gin.Context) {
+	var G request.GetBookmarkList
+	_ = c.ShouldBindJSON(&G)
+	if err := utils.Verify(G.PageInfo, utils.PageInfoVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	if err, list, total := service.GetBookmarkList(getUserID(c), G.CusBookmark, G.PageInfo); err != nil {
+		global.GVA_LOG.Error("获取失败", zap.Any("err", err))
+		response.FailWithMessage("获取失败", c)
+		return
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List:     list,
+			Total:    total,
+			Page:     G.Page,
+			PageSize: G.PageSize,
+		}, "获取成功", c)
+	}
+}

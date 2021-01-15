@@ -9,6 +9,7 @@ import (
 func InitCusBookmarkRouter(Router *gin.RouterGroup) {
 	BookmarkRouter := Router.Group("c").Use(middleware.OperationRecord())
 	{
-		BookmarkRouter.POST("new", cus.CreateBookmark)
+		BookmarkRouter.POST("/bookmark/new", cus.CreateBookmark)
+		BookmarkRouter.POST("/bookmark/list", cus.GetBookmarkList)
 	}
 }
