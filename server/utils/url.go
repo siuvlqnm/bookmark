@@ -1,22 +1,30 @@
 package utils
 
 import (
-	"errors"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
-func ParseUrl(link string) (err error, P map[string]interface{}) {
-	P = make(map[string]interface{}, 5)
+type UrlInfo struct {
+	Protocol string
+	Domain   string
+	Port     int64
+	Path     string
+	Query    string
+}
+
+func ParseUrl(link string) (err error, I *UrlInfo) {
 	u, err := url.Parse(link)
 	if err != nil {
-		return errors.New("域名解析失败"), P
+		return err, I
 	}
 	h := strings.Split(u.Host, ":")
-	P["protocol"] = u.Scheme
-	P["domain"] = h[0]
-	P["port"] = h[1]
-	P["path"] = u.Path
-	P["query"] = u.RawQuery
-	return err, P
+	if len(h) == 2 {
+		port, _ := strconv.ParseInt(h[1], 10, 0)
+		I = &UrlInfo{Protocol: u.Scheme, Domain: h[0], Port: port, Path: u.Path, Query: u.RawQuery}
+		return err, I
+	}
+	I = &UrlInfo{Protocol: u.Scheme, Domain: h[0], Path: u.Path, Query: u.RawQuery}
+	return err, I
 }
