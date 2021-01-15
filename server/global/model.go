@@ -1,12 +1,13 @@
 package global
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type GVA_MODEL struct {
-	ID        uint `gorm:"primarykey"`
+	ID        uint `json:"-" gorm:"primarykey"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`

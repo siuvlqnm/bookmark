@@ -28,7 +28,8 @@ func CreateBookmark(c *gin.Context) {
 		global.GVA_LOG.Error("添加失败", zap.Any("err", err))
 		response.FailWithMessage("添加失败", c)
 	} else {
-		bookmark := &model.CusBookmark{CusWebId: w.ID, CusUserId: getUserID(c), Path: P.Path, Query: P.Query}
+		_, h1 := utils.GetMurmur128()
+		bookmark := &model.CusBookmark{MSeaEngineId: h1, CusWebId: w.ID, CusUserId: getUserID(c), Path: P.Path, Query: P.Query}
 		if err, _ := service.CreateBookmark(*bookmark); err != nil {
 			global.GVA_LOG.Error("添加失败", zap.Any("err", err))
 			response.FailWithMessage("添加失败", c)
@@ -59,3 +60,7 @@ func GetBookmarkList(c *gin.Context) {
 		}, "获取成功", c)
 	}
 }
+
+// func UpdateBookmark(c *gin.Context) {
+
+// }

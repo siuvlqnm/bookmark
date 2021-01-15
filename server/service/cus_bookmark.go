@@ -28,7 +28,7 @@ func GetBookmarkList(userId uint, where model.CusBookmark, info request.PageInfo
 	if err != nil {
 		return err, bookmarkList, total
 	} else {
-		err = db.Order("id desc").Limit(limit).Offset(offset).Find(&bookmarkList).Error
+		err = db.Preload("CusWebsite").Order("id desc").Limit(limit).Offset(offset).Find(&bookmarkList).Error
 	}
 	return err, bookmarkList, total
 }

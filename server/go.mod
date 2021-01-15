@@ -27,6 +27,7 @@ require (
 	github.com/qiniu/api.v7/v7 v7.8.1
 	github.com/satori/go.uuid v1.2.0
 	github.com/shirou/gopsutil v2.20.8+incompatible
+	github.com/spaolacci/murmur3 v1.1.0
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/viper v1.7.1
 	github.com/swaggo/gin-swagger v1.3.0
