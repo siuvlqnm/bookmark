@@ -32,3 +32,9 @@ func GetBookmarkList(userId uint, where model.CusBookmark, info request.PageInfo
 	}
 	return err, bookmarkList, total
 }
+
+func UpateBookmarkMSeaEngineId(id int, MSeaEngineId uint32) (err error) {
+	var bookmark model.CusBookmark
+	err = global.GVA_DB.Model(&bookmark).Where("id = ?", id).Update("m_sea_engine_id", MSeaEngineId).Error
+	return
+}

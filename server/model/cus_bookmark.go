@@ -1,10 +1,12 @@
 package model
 
-import "github.com/siuvlqnm/bookmark/global"
+import (
+	"github.com/siuvlqnm/bookmark/global"
+)
 
 type CusBookmark struct {
 	global.GVA_MODEL
-	MSeaEngineId uint64     `json:"mSeaEngineId"`
+	MSeaEngineId uint32     `json:"mSeaEngineId"`
 	CusWebId     uint       `json:"-"`
 	CusUserId    uint       `json:"-"`
 	Path         string     `json:"path"`

@@ -1,6 +1,8 @@
 package cus
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/siuvlqnm/bookmark/global"
 	"github.com/siuvlqnm/bookmark/model"
@@ -28,12 +30,13 @@ func CreateBookmark(c *gin.Context) {
 		global.GVA_LOG.Error("添加失败", zap.Any("err", err))
 		response.FailWithMessage("添加失败", c)
 	} else {
-		_, h1 := utils.GetMurmur128()
-		bookmark := &model.CusBookmark{MSeaEngineId: h1, CusWebId: w.ID, CusUserId: getUserID(c), Path: P.Path, Query: P.Query}
-		if err, _ := service.CreateBookmark(*bookmark); err != nil {
+		bookmark := &model.CusBookmark{CusWebId: w.ID, CusUserId: getUserID(c), Path: P.Path, Query: P.Query}
+		if err, cbm := service.CreateBookmark(*bookmark); err != nil {
 			global.GVA_LOG.Error("添加失败", zap.Any("err", err))
 			response.FailWithMessage("添加失败", c)
 		} else {
+			murmur32 := utils.GetMurmur32(fmt.Sprintf("%s%d", "bookmark:", cbm.ID))
+			service.UpateBookmarkMSeaEngineId(int(cbm.ID), murmur32)
 			response.OkWithMessage("添加成功", c)
 		}
 	}
