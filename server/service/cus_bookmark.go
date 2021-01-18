@@ -44,17 +44,23 @@ func UpdateBookmar(MSeaEngineId uint32, b *model.CusBookmark) (err error) {
 	db := global.GVA_DB.Model(&bookmark)
 	db = db.Where("m_sea_engine_id = ?", MSeaEngineId)
 	if b.CusWebId != 0 {
-		db.Update("CusWebId", b.CusWebId)
+		db.Update("cus_web_id", b.CusWebId)
 	}
 	if b.Title != "" {
-		db.Update("Title", b.Title)
+		db.Update("title", b.Title)
 	}
-	err = db.Update("Path", b.Path).Update("Query", b.Query).Update("Description", b.Description).Update("CusTagStr", b.CusTagStr).Error
+	err = db.Update("path", b.Path).Update("query", b.Query).Update("description", b.Description).Update("cus_tag_str", b.CusTagStr).Update("is_star", b.IsStar).Error
 	return
 }
 
 func DeleteBookmark(MSeaEngineId uint32) (err error) {
 	var b model.CusBookmark
 	err = global.GVA_DB.Where("m_sea_engine_id = ?", MSeaEngineId).Delete(&b).Error
+	return
+}
+
+func UpdateToStar(MSeaEngineId uint32, IsStar uint8) (err error) {
+	var bookmark model.CusBookmark
+	err = global.GVA_DB.Model(&bookmark).Where("m_sea_engine_id = ?", MSeaEngineId).Update("is_star", IsStar).Error
 	return
 }

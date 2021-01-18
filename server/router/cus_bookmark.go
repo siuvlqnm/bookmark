@@ -13,5 +13,6 @@ func InitCusBookmarkRouter(Router *gin.RouterGroup) {
 		BookmarkRouter.POST("/bookmark/list", cus.GetBookmarkList)
 		BookmarkRouter.PUT("/bookmark/update", cus.UpdateBookmark)
 		BookmarkRouter.DELETE("/bookmark/delete", cus.DeleteBookmark)
+		BookmarkRouter.PUT("/bookmark/updateToStar", cus.UpdateToStar)
 	}
 }

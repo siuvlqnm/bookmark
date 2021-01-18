@@ -72,7 +72,7 @@ func UpdateBookmark(c *gin.Context) {
 	}
 	website := &model.CusWebsite{Protocol: P.Protocol, Domain: P.Domain, Port: int(P.Port)}
 	_, w := service.CreateWebSite(website)
-	bookmark := &model.CusBookmark{CusWebId: w.ID, Path: P.Path, Query: P.Query, Title: U.Title, Description: U.Description, CusTagStr: U.TagStr}
+	bookmark := &model.CusBookmark{CusWebId: w.ID, Path: P.Path, Query: P.Query, Title: U.Title, Description: U.Description, CusTagStr: U.TagStr, IsStar: U.IsStar}
 	if err = service.UpdateBookmar(U.MSeaEngineId, bookmark); err != nil {
 		global.GVA_LOG.Error("更新失败", zap.Any("err", err))
 		response.FailWithMessage("更新失败", c)
@@ -95,5 +95,21 @@ func DeleteBookmark(c *gin.Context) {
 		return
 	} else {
 		response.OkWithMessage("删除成功", c)
+	}
+}
+
+func UpdateToStar(c *gin.Context) {
+	var U request.NewBookmark
+	_ = c.ShouldBindJSON(&U)
+	if err := utils.Verify(U, utils.DeleteBookmarkVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	if err := service.UpdateToStar(U.MSeaEngineId, U.IsStar); err != nil {
+		global.GVA_LOG.Error("标星失败", zap.Any("err", err))
+		response.FailWithMessage("标星失败", c)
+		return
+	} else {
+		response.OkWithMessage("标星成功", c)
 	}
 }

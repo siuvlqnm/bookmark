@@ -8,6 +8,7 @@ type NewBookmark struct {
 	Title        string `json:"title"`
 	Description  string `json:"description"`
 	TagStr       string `json:tagStr`
+	IsStar       uint8  `json:isStar`
 }
 
 type GetBookmarkList struct {
