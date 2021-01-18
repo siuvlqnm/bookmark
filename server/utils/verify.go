@@ -17,6 +17,7 @@ var (
 	SetUserAuthorityVerify = Rules{"UUID": {NotEmpty()}, "AuthorityId": {NotEmpty()}}
 	CRegisterVerify        = Rules{"Username": {NotEmpty()}, "NickName": {NotEmpty()}, "Password": {NotEmpty()}}
 	CLoginVerify           = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty()}}
-	NewBookmarkVerify      = Rules{"Link": {NotEmpty()}}
-	UpdateBookmarkVerify   = Rules{"Link": {NotEmpty()}, "MSeaEngineId": {NotEmpty()}}
+	NewBookmarkVerify      = Rules{"Link": {NotEmpty()}, "Title": {NotEmpty()}}
+	UpdateBookmarkVerify   = Rules{"Link": {NotEmpty()}, "Title": {NotEmpty()}, "MSeaEngineId": {NotEmpty()}}
+	DeleteBookmarkVerify   = Rules{"MSeaEngineId": {NotEmpty()}}
 )

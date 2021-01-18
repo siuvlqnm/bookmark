@@ -80,5 +80,20 @@ func UpdateBookmark(c *gin.Context) {
 	} else {
 		response.OkWithMessage("更新成功", c)
 	}
+}
 
+func DeleteBookmark(c *gin.Context) {
+	var D request.NewBookmark
+	_ = c.ShouldBindJSON(&D)
+	if err := utils.Verify(D, utils.DeleteBookmarkVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	if err := service.DeleteBookmark(D.MSeaEngineId); err != nil {
+		global.GVA_LOG.Error("删除失败", zap.Any("err", err))
+		response.FailWithMessage("删除失败", c)
+		return
+	} else {
+		response.OkWithMessage("删除成功", c)
+	}
 }

@@ -15,5 +15,6 @@ type CusBookmark struct {
 	Description  string     `json:"description"`
 	CusGroupId   uint       `json:"cusGroupId"`
 	CusTagStr    string     `json:"cusTagStr"`
+	IsStar       uint8      `json:"isStar"`
 	CusWebsite   CusWebsite `json:"cusWebsite" gorm:"foreignKey:CusWebId"`
 }
