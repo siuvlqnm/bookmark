@@ -38,3 +38,9 @@ func UpateBookmarkMSeaEngineId(id int, MSeaEngineId uint32) (err error) {
 	err = global.GVA_DB.Model(&bookmark).Where("id = ?", id).Update("m_sea_engine_id", MSeaEngineId).Error
 	return
 }
+
+func UpdateBookmar(MSeaEngineId uint32, b *model.CusBookmark) (err error) {
+	var bookmark model.CusBookmark
+	err = global.GVA_DB.Model(&bookmark).Where("m_sea_engine_id = ?", MSeaEngineId).Update("CusWebId", b.CusWebId).Update("Path", b.Path).Update("Query", b.Query).Update("Title", b.Title).Update("Description", b.Description).Update("CusTagStr", b.CusTagStr).Error
+	return
+}

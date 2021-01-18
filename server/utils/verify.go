@@ -18,4 +18,5 @@ var (
 	CRegisterVerify        = Rules{"Username": {NotEmpty()}, "NickName": {NotEmpty()}, "Password": {NotEmpty()}}
 	CLoginVerify           = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty()}}
 	NewBookmarkVerify      = Rules{"Link": {NotEmpty()}}
+	UpdateBookmarkVerify   = Rules{"Link": {NotEmpty()}, "MSeaEngineId": {NotEmpty()}}
 )

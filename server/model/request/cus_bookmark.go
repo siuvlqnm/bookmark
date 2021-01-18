@@ -3,9 +3,11 @@ package request
 import "github.com/siuvlqnm/bookmark/model"
 
 type NewBookmark struct {
-	Link        string `json:"link"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
+	MSeaEngineId uint32 `json:mSeaEngineId`
+	Link         string `json:"link"`
+	Title        string `json:"title"`
+	Description  string `json:"description"`
+	TagStr       string `json:tagStr`
 }
 
 type GetBookmarkList struct {
