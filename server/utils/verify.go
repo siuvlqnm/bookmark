@@ -20,4 +20,5 @@ var (
 	NewBookmarkVerify      = Rules{"Link": {NotEmpty()}, "Title": {NotEmpty()}}
 	UpdateBookmarkVerify   = Rules{"Link": {NotEmpty()}, "Title": {NotEmpty()}, "MSeaEngineId": {NotEmpty()}}
 	DeleteBookmarkVerify   = Rules{"MSeaEngineId": {NotEmpty()}}
+	NewBookmarkGroupVerify = Rules{"GroupName": {NotEmpty()}}
 )

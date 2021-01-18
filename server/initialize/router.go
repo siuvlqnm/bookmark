@@ -8,7 +8,7 @@ import (
 	"github.com/siuvlqnm/bookmark/global"
 	"github.com/siuvlqnm/bookmark/middleware"
 	"github.com/siuvlqnm/bookmark/router"
-	"github.com/swaggo/gin-swagger"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
@@ -55,6 +55,7 @@ func Routers() *gin.Engine {
 	{
 		router.InitCusUserRouter(CliPrivateGroup)
 		router.InitCusBookmarkRouter(CliPrivateGroup)
+		router.InitCusBookmarkGroupRouter(CliPrivateGroup)
 	}
 	global.GVA_LOG.Info("router register success")
 	return Router
