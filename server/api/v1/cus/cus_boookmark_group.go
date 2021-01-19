@@ -10,6 +10,19 @@ import (
 	"go.uber.org/zap"
 )
 
+func GetBookmarkGroupList(c *gin.Context) {
+	isArchive := c.Query("isArchive")
+	if err, list := service.GetBookMarkGroupList(isArchive); err != nil {
+		global.GVA_LOG.Error("获取失败", zap.Any("err", err))
+		response.FailWithMessage("获取失败", c)
+		return
+	} else {
+		response.OkWithDetailed(response.PageResult{
+			List: list,
+		}, "获取成功", c)
+	}
+}
+
 func CreateNewGroup(c *gin.Context) {
 	var group model.CusBookmarkGroup
 	_ = c.ShouldBindJSON(&group)
@@ -25,5 +38,37 @@ func CreateNewGroup(c *gin.Context) {
 		murmur32 := utils.GetMurmur32("group:", int(cbg.ID))
 		service.UpateGroupGSeaEngineId(int(cbg.ID), murmur32)
 		response.OkWithMessage("添加成功", c)
+	}
+}
+
+func UpdateBookmarkGroup(c *gin.Context) {
+	var u model.CusBookmarkGroup
+	_ = c.ShouldBindJSON(&u)
+	if err := utils.Verify(u, utils.UpdateBookmarkGroupVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	if err := service.UpdateBookmarkGroup(&u); err != nil {
+		global.GVA_LOG.Error("更新失败", zap.Any("err", err))
+		response.FailWithMessage("更新失败", c)
+		return
+	} else {
+		response.OkWithMessage("更新成功", c)
+	}
+}
+
+func DeleteBookmarkGroup(c *gin.Context) {
+	var d model.CusBookmarkGroup
+	_ = c.ShouldBindJSON(&d)
+	if err := utils.Verify(d, utils.UpdateBookmarkGroupVerify); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	if err := service.DeleteBookmarkGroup(d.GSeaEngineId); err != nil {
+		global.GVA_LOG.Error("删除失败", zap.Any("err", err))
+		response.FailWithMessage("删除失败", c)
+		return
+	} else {
+		response.OkWithMessage("删除成功", c)
 	}
 }
