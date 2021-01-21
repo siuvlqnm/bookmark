@@ -12,6 +12,7 @@ type NewBookmark struct {
 	Title        string `json:"title"`
 	Description  string `json:"description"`
 	TagStr       string `json:"tagStr"`
+	CusGroupId   uint32 `json:"groupId"`
 	IsStar       uint8  `json:"isStar"`
 }
 
