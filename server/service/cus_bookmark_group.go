@@ -7,7 +7,7 @@ import (
 
 func GetBookMarkGroupList(isArchive string) (err error, list interface{}) {
 	var groupList []model.CusBookmarkGroup
-	err = global.GVA_DB.Model(&model.CusBookmarkGroup{}).Preload("CusBookmark").Preload("CusWebsite").Order("id desc").Find(&groupList).Error
+	err = global.GVA_DB.Model(&model.CusBookmarkGroup{}).Preload("CusBookmark").Order("id desc").Find(&groupList).Error
 	return err, groupList
 }
 

@@ -28,7 +28,7 @@ func GetBookmarkList(userId uint, where model.CusBookmark, info request.PageInfo
 	if err != nil {
 		return err, bookmarkList, total
 	} else {
-		err = db.Preload("CusWebsite").Order("id desc").Limit(limit).Offset(offset).Find(&bookmarkList).Error
+		err = db.Order("id desc").Limit(limit).Offset(offset).Find(&bookmarkList).Error
 	}
 	return err, bookmarkList, total
 }
@@ -40,16 +40,18 @@ func UpateBookmarkMSeaEngineId(id int, MSeaEngineId uint32) (err error) {
 }
 
 func UpdateBookmar(MSeaEngineId uint32, b *model.CusBookmark) (err error) {
-	var bookmark model.CusBookmark
-	db := global.GVA_DB.Model(&bookmark)
-	db = db.Where("m_sea_engine_id = ?", MSeaEngineId)
-	if b.CusWebId != 0 {
-		db.Update("cus_web_id", b.CusWebId)
-	}
-	if b.Title != "" {
-		db.Update("title", b.Title)
-	}
-	err = db.Update("path", b.Path).Update("query", b.Query).Update("description", b.Description).Update("cus_tag_str", b.CusTagStr).Update("is_star", b.IsStar).Error
+	var bookmark *model.CusBookmark
+	upDateMap := make(map[string]interface{})
+	upDateMap["cus_web_id"] = b.CusWebId
+	upDateMap["protocol"] = b.Protocol
+	upDateMap["domain"] = b.Domain
+	upDateMap["path"] = b.Path
+	upDateMap["query"] = b.Query
+	upDateMap["title"] = b.Title
+	upDateMap["description"] = b.Description
+	upDateMap["cus_tag_str"] = b.CusTagStr
+	upDateMap["is_star"] = b.IsStar
+	err = global.GVA_DB.Model(&bookmark).Where("m_sea_engine_id = ?", MSeaEngineId).Updates(upDateMap).Error
 	return
 }
 

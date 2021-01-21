@@ -54,6 +54,7 @@ func Routers() *gin.Engine {
 	CliPrivateGroup.Use(middleware.JWTAuth())
 	{
 		router.InitCusUserRouter(CliPrivateGroup)
+		router.InitCusWebsiteRouter(CliPrivateGroup)
 		router.InitCusBookmarkRouter(CliPrivateGroup)
 		router.InitCusBookmarkGroupRouter(CliPrivateGroup)
 	}

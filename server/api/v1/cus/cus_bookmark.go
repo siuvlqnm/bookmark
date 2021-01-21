@@ -12,21 +12,22 @@ import (
 )
 
 func CreateBookmark(c *gin.Context) {
-	var N request.NewBookmark
+	var N model.CusBookmark
 	_ = c.ShouldBindJSON(&N)
 	if err := utils.Verify(N, utils.NewBookmarkVerify); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err, P := utils.ParseUrl(N.Link)
+
+	err, w := service.GetWebSite(N.Domain)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	website := &model.CusWebsite{Protocol: P.Protocol, Domain: P.Domain, Port: int(P.Port)}
-	_, w := service.CreateWebSite(website)
-	bookmark := &model.CusBookmark{CusWebId: w.ID, CusUserId: getUserID(c), Path: P.Path, Query: P.Query}
-	if err, cbm := service.CreateBookmark(*bookmark); err != nil {
+
+	N.CusUserId = getUserID(c)
+	N.CusWebId = w.ID
+	if err, cbm := service.CreateBookmark(N); err != nil {
 		global.GVA_LOG.Error("添加失败", zap.Any("err", err))
 		response.FailWithMessage("添加失败", c)
 	} else {
@@ -70,9 +71,9 @@ func UpdateBookmark(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	website := &model.CusWebsite{Protocol: P.Protocol, Domain: P.Domain, Port: int(P.Port)}
+	website := &model.CusWebsite{Protocol: P.Protocol, Domain: P.Domain, Title: U.Title, Description: U.Description}
 	_, w := service.CreateWebSite(website)
-	bookmark := &model.CusBookmark{CusWebId: w.ID, Path: P.Path, Query: P.Query, Title: U.Title, Description: U.Description, CusTagStr: U.TagStr, IsStar: U.IsStar}
+	bookmark := &model.CusBookmark{CusWebId: w.ID, Protocol: P.Protocol, Domain: w.Domain, Path: P.Path, Query: P.Query, Title: U.Title, Description: U.Description, CusTagStr: U.TagStr, IsStar: U.IsStar}
 	if err = service.UpdateBookmar(U.MSeaEngineId, bookmark); err != nil {
 		global.GVA_LOG.Error("更新失败", zap.Any("err", err))
 		response.FailWithMessage("更新失败", c)
