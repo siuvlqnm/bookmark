@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/siuvlqnm/bookmark/global"
 	"github.com/siuvlqnm/bookmark/model"
+	"github.com/siuvlqnm/bookmark/model/request"
 	"github.com/siuvlqnm/bookmark/model/response"
 	"github.com/siuvlqnm/bookmark/service"
 	"github.com/siuvlqnm/bookmark/utils"
@@ -11,8 +12,9 @@ import (
 )
 
 func GetBookmarkGroupList(c *gin.Context) {
-	isArchive := c.Query("isArchive")
-	if err, list := service.GetBookMarkGroupList(isArchive); err != nil {
+	var g request.GetGetBookmarkGroup
+	_ = c.ShouldBindQuery(&g)
+	if err, list := service.GetBookMarkGroupList(getUserID(c), g); err != nil {
 		global.GVA_LOG.Error("获取失败", zap.Any("err", err))
 		response.FailWithMessage("获取失败", c)
 		return
@@ -30,6 +32,7 @@ func CreateNewGroup(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
+	group.CusUserId = getUserID(c)
 	if err, cbg := service.CreateBookmarkGroup(group); err != nil {
 		global.GVA_LOG.Error("添加失败", zap.Any("err", err))
 		response.FailWithMessage("添加失败", c)

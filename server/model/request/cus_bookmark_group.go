@@ -1,9 +1,12 @@
 package request
 
-type CusBookmarkGroup struct {
+type PostBookmarkGroup struct {
 	GSeaEngineId uint32 `json:"gSeaEngineId"`
-	ParentId     int    `json:"parentId"`
-	GroupName    string `json"groupName"`
-	GroupIcon    string `json:"groupIcon"`
-	IsArchive    uint8  `json:"isArchive"`
+	GShareId     uint32 `json:"gShareId"`
+	IsShare      bool   `json:"isShare"`
+	IsArchive    bool   `json:"isArchive"`
+}
+
+type GetGetBookmarkGroup struct {
+	IsArchive bool `form:"isArchive"`
 }

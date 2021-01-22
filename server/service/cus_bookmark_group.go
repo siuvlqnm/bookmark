@@ -1,13 +1,19 @@
 package service
 
 import (
+	"strconv"
+
 	"github.com/siuvlqnm/bookmark/global"
 	"github.com/siuvlqnm/bookmark/model"
+	"github.com/siuvlqnm/bookmark/model/request"
+	"github.com/siuvlqnm/bookmark/utils"
 )
 
-func GetBookMarkGroupList(isArchive string) (err error, list interface{}) {
+func GetBookMarkGroupList(userId uint, where request.GetGetBookmarkGroup) (err error, list interface{}) {
+
+	db := global.GVA_DB.Model(&model.CusBookmarkGroup{})
 	var groupList []model.CusBookmarkGroup
-	err = global.GVA_DB.Model(&model.CusBookmarkGroup{}).Preload("CusBookmark").Order("id desc").Find(&groupList).Error
+	err = db.Where("cus_user_id = ? AND is_archive = ?", userId, where.IsArchive).Order("id desc").Find(&groupList).Error
 	return err, groupList
 }
 
@@ -36,4 +42,19 @@ func UpdateBookmarkGroup(u *model.CusBookmarkGroup) (err error) {
 func DeleteBookmarkGroup(GSeaEngineId uint32) (err error) {
 	var g model.CusBookmarkGroup
 	return global.GVA_DB.Where("g_sea_engine_id = ?", GSeaEngineId).Delete(&g).Error
+}
+
+func GetGroupIdByGSeaEngineId(GSeaEngineId uint32) (groupId int) {
+	if val, err := utils.GetSetValue("group", GSeaEngineId); err != nil {
+		var g model.CusBookmarkGroup
+		err := global.GVA_DB.Select("id").Where("g_sea_engine_id = ?", GSeaEngineId).Find(&g).Error
+		if err != nil {
+			return 0
+		}
+		utils.SetSetValue("group", GSeaEngineId, int(g.ID))
+		return int(g.ID)
+	} else {
+		id, _ := strconv.Atoi(val)
+		return id
+	}
 }
